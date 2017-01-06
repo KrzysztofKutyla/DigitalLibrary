@@ -13,51 +13,41 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
-public class Publication implements java.io.Serializable{
-	
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Publication implements java.io.Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	//@TableGenerator(name = "Publ_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 10, allocationSize = 10)
+	// @TableGenerator(name = "Publ_Gen", table = "ID_GEN", pkColumnName =
+	// "GEN_NAME", valueColumnName = "GEN_VAL", initialValue = 10,
+	// allocationSize = 10)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	private String title;
 
 	private String description;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			   name = "Publication_Author", 
-			   joinColumns = @JoinColumn(name = "publication_id",
-			   referencedColumnName="id",
-			   nullable=true),
-			   inverseJoinColumns = @JoinColumn(name = "author_id",
-			   referencedColumnName="id",
-			   nullable=true))
-	 
+	@JoinTable(name = "Publication_Author", joinColumns = @JoinColumn(name = "publication_id", referencedColumnName = "id", nullable = true), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = true))
+
 	private List<Author> listOfAuthors;
 
 	private String publisher;
@@ -75,7 +65,6 @@ public class Publication implements java.io.Serializable{
 	@LastModifiedDate
 	@JsonFormat(pattern = "dd::MM::yyyy")
 	private LocalDate lastModifiedDate;
-	
 
 	public long getId() {
 		return id;
@@ -117,13 +106,10 @@ public class Publication implements java.io.Serializable{
 		return createdDate;
 	}
 
-
 	public LocalDate getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	
-	
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -169,7 +155,7 @@ public class Publication implements java.io.Serializable{
 	}
 
 	public Publication(final Builder builder) {
-		
+
 		this.title = builder.title;
 		this.description = builder.description;
 		this.listOfAuthors = builder.listOfAuthors;
@@ -181,18 +167,16 @@ public class Publication implements java.io.Serializable{
 		this.createdDate = builder.createdDate;
 		this.lastModifiedDate = builder.lastModifiedDate;
 	}
-	
+
 	public Publication() {
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
-	    return ToStringBuilder.reflectionToString(this);
+		return ToStringBuilder.reflectionToString(this);
 	}
-	
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -272,10 +256,8 @@ public class Publication implements java.io.Serializable{
 		return true;
 	}
 
-
-
 	public static class Builder {
-		
+
 		private String title;
 		private String description;
 		private List<Author> listOfAuthors;
@@ -286,69 +268,60 @@ public class Publication implements java.io.Serializable{
 		private String language;
 		private LocalDate createdDate;
 		private LocalDate lastModifiedDate;
-		
-		public Builder title(String title)
-	    {
-	        this.title = title;
+
+		public Builder title(String title) {
+			this.title = title;
 			return this;
-	    }
-		
-		public Builder descryption (String descryption)
-	    {
-	        this.description = descryption;
+		}
+
+		public Builder descryption(String descryption) {
+			this.description = descryption;
 			return this;
-	    }
-		public Builder listOfAuthors(List<Author> listOfAuthors)
-	    {
-	        this.listOfAuthors = listOfAuthors;
+		}
+
+		public Builder listOfAuthors(List<Author> listOfAuthors) {
+			this.listOfAuthors = listOfAuthors;
 			return this;
-	    }
-		
-		public Builder publisher (String publisher)
-	    {
-	        this.publisher = publisher;
+		}
+
+		public Builder publisher(String publisher) {
+			this.publisher = publisher;
 			return this;
-	    }
-		
-		public Builder year (int yearOfPublication)
-	    {
-	        this.yearOfPublication = yearOfPublication;
+		}
+
+		public Builder year(int yearOfPublication) {
+			this.yearOfPublication = yearOfPublication;
 			return this;
-	    }
-		
-		public Builder placeOfPublication (String placeOfPublication) {
+		}
+
+		public Builder placeOfPublication(String placeOfPublication) {
 			this.placeOfPublication = placeOfPublication;
 			return this;
 		}
-		
-		public Builder resourceIdentifier (String resourceIdentifier)
-	    {
-	        this.resourceIdentifier = resourceIdentifier;
-			return this;
-	    }
-		
-		public Builder language (String language)
-	    {
-	        this.language = language;
-			return this;
-	    }
-		
-		public Builder createdDate(LocalDate createdDate)
-	    {
-	        this.createdDate = createdDate;
-			return this;
-	    }
 
-		public Builder lastModifiedDate (LocalDate lastModifiedDate)
-	    {
-	        this.lastModifiedDate = lastModifiedDate;
+		public Builder resourceIdentifier(String resourceIdentifier) {
+			this.resourceIdentifier = resourceIdentifier;
 			return this;
-	    }
-		 public Publication build()
-	     {
-	         return new Publication(this);
-	     }
+		}
 
-		
+		public Builder language(String language) {
+			this.language = language;
+			return this;
+		}
+
+		public Builder createdDate(LocalDate createdDate) {
+			this.createdDate = createdDate;
+			return this;
+		}
+
+		public Builder lastModifiedDate(LocalDate lastModifiedDate) {
+			this.lastModifiedDate = lastModifiedDate;
+			return this;
+		}
+
+		public Publication build() {
+			return new Publication(this);
+		}
+
 	}
 }

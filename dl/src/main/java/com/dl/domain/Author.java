@@ -10,29 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
-
 @Entity
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
-public class Author implements java.io.Serializable{
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Author implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//@TableGenerator(name = "Auth_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", pkColumnValue = "Addr_Gen", initialValue = 100, allocationSize = 10)
+	// @TableGenerator(name = "Auth_Gen", table = "ID_GEN", pkColumnName =
+	// "GEN_NAME", valueColumnName = "GEN_VAL", pkColumnValue = "Addr_Gen",
+	// initialValue = 100, allocationSize = 10)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -42,11 +37,11 @@ public class Author implements java.io.Serializable{
 	private LocalDate dateOfBirthOfTheAuthor;
 	@JsonFormat(pattern = "dd::MM::yyyy")
 	private LocalDate dateOfDeathOfTheAuthor;
-	
+
 	@ManyToMany(mappedBy = "listOfAuthors", fetch = FetchType.EAGER)
-	//@JsonManagedReference
-	//	@JsonIgnore
-	
+	// @JsonManagedReference
+	// @JsonIgnore
+
 	private List<Publication> listOfPublications;
 
 	public long getId() {
@@ -98,7 +93,7 @@ public class Author implements java.io.Serializable{
 	}
 
 	public Author(final Builder builder) {
-		
+
 		this.firstName = builder.firstName;
 		this.lastName = builder.lastName;
 		this.dateOfBirthOfTheAuthor = builder.dateOfBirthOfTheAuthor;
@@ -106,8 +101,6 @@ public class Author implements java.io.Serializable{
 		this.listOfPublications = builder.listOfPublications;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -165,52 +158,45 @@ public class Author implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-	    return ToStringBuilder.reflectionToString(this);
+		return ToStringBuilder.reflectionToString(this);
 	}
-	
-public static class Builder {
 
-	private List<Publication> listOfPublications;
-	private LocalDate dateOfDeathOfTheAuthor;
-	private LocalDate dateOfBirthOfTheAuthor;
-	private String lastName;
-	private String firstName;
-	
-	public Builder listOfPublications(List<Publication> listOfPublications)
-    {
-        this.listOfPublications = listOfPublications;
-		return this;
-    }
+	public static class Builder {
 
-	public Builder dateOfDeathOfTheAuthor(LocalDate dateOfDeathOfTheAuthor)
-    {
-        this.dateOfDeathOfTheAuthor = dateOfDeathOfTheAuthor;
-		return this;
-    }
+		private List<Publication> listOfPublications;
+		private LocalDate dateOfDeathOfTheAuthor;
+		private LocalDate dateOfBirthOfTheAuthor;
+		private String lastName;
+		private String firstName;
 
-	public Builder dateOfBirthOfTheAuthor(LocalDate dateOfBirthOfTheAuthor)
-    {
-        this.dateOfBirthOfTheAuthor = dateOfBirthOfTheAuthor;
-		return this;
-    }
-	
-	public Builder firstName(String firstName)
-    {
-        this.firstName = firstName;
-		return this;
-    }
-	
-	public Builder lastName(String lastName)
-    {
-        this.lastName = lastName;
-		return this;
-    }
-	
-	 public Author build()
-     {
-         return new Author(this);
-     }
+		public Builder listOfPublications(List<Publication> listOfPublications) {
+			this.listOfPublications = listOfPublications;
+			return this;
+		}
 
-	
+		public Builder dateOfDeathOfTheAuthor(LocalDate dateOfDeathOfTheAuthor) {
+			this.dateOfDeathOfTheAuthor = dateOfDeathOfTheAuthor;
+			return this;
+		}
+
+		public Builder dateOfBirthOfTheAuthor(LocalDate dateOfBirthOfTheAuthor) {
+			this.dateOfBirthOfTheAuthor = dateOfBirthOfTheAuthor;
+			return this;
+		}
+
+		public Builder firstName(String firstName) {
+			this.firstName = firstName;
+			return this;
+		}
+
+		public Builder lastName(String lastName) {
+			this.lastName = lastName;
+			return this;
+		}
+
+		public Author build() {
+			return new Author(this);
+		}
+
 	}
 }
